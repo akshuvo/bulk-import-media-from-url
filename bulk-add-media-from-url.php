@@ -37,6 +37,7 @@ function bulk_add_media_from_url_option_page_html() {
         jQuery(document).on('submit', '.form-bulk-add-media', function (e) {
             e.preventDefault();
             var $form = jQuery(this);
+            var $btn = $form.find('button[type="submit"]');
 
             jQuery.ajax({
                 url: ajaxurl,
@@ -44,12 +45,16 @@ function bulk_add_media_from_url_option_page_html() {
                 data: $form.serialize(),
                 beforeSend: function () {
                     $form.find('.spinner').addClass('is-active');
+                    $form.find('.ajax-response').html('');
+                    $btn.prop('disabled', true);
                 },
                 success: function (response) {
+                    $btn.prop('disabled', false);
                     $form.find('.spinner').removeClass('is-active');
                     $form.find('.ajax-response').html(response);
                 },
                 error: function (error) {
+                    $btn.prop('disabled', false);
                     $form.find('.spinner').removeClass('is-active');
                     $form.find('.ajax-response').html(error);
                 }
