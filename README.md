@@ -45,8 +45,3 @@ No, this plugin only supports importing media files from URLs that do not requir
 
 ### 1.0.0
 - Initial release.
-
-## Upgrade Notice
-
-### 1.0.0
-Initial release of the Bulk Import Media From URL plugin.
