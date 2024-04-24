@@ -1,15 +1,5 @@
 # Bulk Import Media From URL
 
-**Contributors:** [mdshuvo](https://profiles.wordpress.org/mdshuvo), [addonmaster](https://profiles.wordpress.org/addonmaster)
-**Tags:** media, images, bulk, URL, import  
-**Requires at least:** 4.0  
-**Tested up to:** 5.8  
-**Stable tag:** 1.0.0  
-**License:** GPLv2 or later  
-**License URI:** [GNU General Public License v2.0](http://www.gnu.org/licenses/gpl-2.0.html)
-
-## Description
-
 Bulk Import Media From URL is a WordPress plugin that allows you to quickly and easily import media files (images, audio, video, pdf, zip, docs, etc) from URLs in bulk.
 
 ## Features

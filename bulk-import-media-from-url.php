@@ -20,19 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 final class BIMFU_Plugin {
 
     /**
-     * Plugin version
-     *
-     * @var string
-     */
-    const version = '1.0';
-
-    /**
      * Class construcotr
      */
     private function __construct() {
-        // $this->define_constants();
-
-        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
 
         // Register the plugin menu
         add_action('admin_menu', [ $this, 'menu_register' ] );
@@ -54,41 +44,6 @@ final class BIMFU_Plugin {
         }
 
         return $instance;
-    }
-
-    /**
-     * Define the required plugin constants
-     *
-     * @return void
-     */
-    public function define_constants() {
-        define( 'WD_ACADEMY_VERSION', self::version );
-        define( 'WD_ACADEMY_FILE', __FILE__ );
-        define( 'WD_ACADEMY_PATH', __DIR__ );
-        define( 'WD_ACADEMY_URL', plugins_url( '', WD_ACADEMY_FILE ) );
-        define( 'WD_ACADEMY_ASSETS', WD_ACADEMY_URL . '/assets' );
-    }
-
-    /**
-     * Initialize the plugin
-     *
-     * @return void
-     */
-    public function init_plugin() {
-
-        // new WeDevs\Academy\Assets();
-
-        // if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-        //     new WeDevs\Academy\Ajax();
-        // }
-
-        // if ( is_admin() ) {
-        //     new WeDevs\Academy\Admin();
-        // } else {
-        //     new WeDevs\Academy\Frontend();
-        // }
-
-        // new WeDevs\Academy\API();
     }
 
     /**
@@ -150,7 +105,6 @@ final class BIMFU_Plugin {
                 });
 
             });
-
         </script>
         <?php
     }
