@@ -1,12 +1,15 @@
 <?php
-/*
-Plugin Name: Bulk Import Media From URL
-Plugin URI: https://github.com/akshuvo/bulk-add-media-from-url
-Description: Bulk Import Media From URL for WordPress
-Author: AddonMaster
-Author URI: https://addonmaster.com
-Version: 1.0.0
-*/
+/**
+ * Plugin Name: Bulk Import Media From URL
+ * Plugin URI: https://github.com/akshuvo/bulk-add-media-from-url
+ * Description: Bulk Import Media From URL for WordPress
+ * Author: AddonMaster
+ * Author URI: https://addonmaster.com
+ * Version: 1.0.0
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
