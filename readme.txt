@@ -1,6 +1,6 @@
 === Bulk Import Media From URL ===
 Contributors: addonmaster, mdshuvo
-Tags: media, images, bulk, URL, import
+Tags: media, bulk-import, bulk-media, import-from-url, import-image-from-url, bulk-import-media
 Requires at least: 4.0
 Tested up to: 6.5
 Stable tag: 1.0.0
