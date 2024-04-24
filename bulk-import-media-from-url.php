@@ -89,15 +89,23 @@ final class BIMFU_Plugin {
         <script>
             jQuery(document).on('submit', '.form-bulk-add-media', function (e) {
                 e.preventDefault();
-                var $form = jQuery(this);
-                var $btn = $form.find('button[type="submit"]');
+                let $form = jQuery(this);
+                let $btn = $form.find('button[type="submit"]');
 
                 $form.find('.spinner').addClass('is-active');
                 $form.find('.ajax-response').html('');
                 $btn.prop('disabled', true);
 
-                jQuery.post(ajaxurl, $form.serialize(), function (response) {
-                    $form.find('.ajax-response').html(response);
+                jQuery.post(ajaxurl, $form.serialize(), function (res) {
+                    if (res.success) {
+                        let html = '';
+                        res.data.forEach(function (item) {
+                            html += '<p class="notice notice-' + item.status + '">' + item.msg + item.url + '</p>';
+                        });
+                        $form.find('.ajax-response').html(html);
+                    } else {
+                        $form.find('.ajax-response').html('<p class="notice notice-error">' + res.data + '</p>');
+                    }
 
                 }).always(function () {
                     $btn.prop('disabled', false);
@@ -117,6 +125,11 @@ final class BIMFU_Plugin {
     public function ajax_handler() {
         // Check nonce
         check_ajax_referer('bulk-add-media-from-url');
+
+        // Check permission
+        if ( ! current_user_can('upload_files') ) {
+            wp_send_json_error( __('You do not have permission to upload files.', 'bulk-import-media-from-url') );
+        }
 
         // Get URLs
         $urls = isset($_POST['urls']) ? sanitize_textarea_field($_POST['urls']) : '';
