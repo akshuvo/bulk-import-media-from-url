@@ -14,11 +14,159 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Create Option Page
-function bimfu_option_page() {
-    add_submenu_page('upload.php', 'Bulk Import Media From URL', 'Bulk Media From URL', 'upload_files', 'bulk-add-media-from-url', 'bimfu_option_page_html');
+/**
+ * The main plugin class
+ */
+final class BIMFU_Plugin {
+
+    /**
+     * Plugin version
+     *
+     * @var string
+     */
+    const version = '1.0';
+
+    /**
+     * Class construcotr
+     */
+    private function __construct() {
+        $this->define_constants();
+
+        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+
+        add_action('admin_menu', [ $this, 'menu_register' ] );
+    }
+
+    /**
+     * Initializes a singleton instance
+     *
+     * @return \BIMFU_Plugin
+     */
+    public static function init() {
+        static $instance = false;
+
+        if ( ! $instance ) {
+            $instance = new self();
+        }
+
+        return $instance;
+    }
+
+    /**
+     * Define the required plugin constants
+     *
+     * @return void
+     */
+    public function define_constants() {
+        define( 'WD_ACADEMY_VERSION', self::version );
+        define( 'WD_ACADEMY_FILE', __FILE__ );
+        define( 'WD_ACADEMY_PATH', __DIR__ );
+        define( 'WD_ACADEMY_URL', plugins_url( '', WD_ACADEMY_FILE ) );
+        define( 'WD_ACADEMY_ASSETS', WD_ACADEMY_URL . '/assets' );
+    }
+
+    /**
+     * Initialize the plugin
+     *
+     * @return void
+     */
+    public function init_plugin() {
+
+        // new WeDevs\Academy\Assets();
+
+        // if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+        //     new WeDevs\Academy\Ajax();
+        // }
+
+        // if ( is_admin() ) {
+        //     new WeDevs\Academy\Admin();
+        // } else {
+        //     new WeDevs\Academy\Frontend();
+        // }
+
+        // new WeDevs\Academy\API();
+    }
+
+    /**
+     * Register the plugin menu
+     *
+     * @return void
+     */
+    public function menu_register() {
+        add_submenu_page(
+            'upload.php',
+            __( 'Bulk Media From URL', 'bulk-import-media-from-url' ),
+            __( 'Bulk Media From URL', 'bulk-import-media-from-url' ),
+            'upload_files',
+            'bulk-add-media-from-url',
+            [ $this, 'menu_page' ]
+        );
+    }
+
+    /**
+     * The plugin menu page
+     *
+     * @return void
+     */
+    public function menu_page() {
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+            <form class="form-bulk-add-media" method="post">
+                <label for="urls"><strong class="title"><?php esc_html_e( 'Enter URLs', 'bulk-import-media-from-url' ); ?></strong></label>
+                <textarea name="urls" id="urls" class="large-text code" rows="10"></textarea>
+                <p class="description"><?php esc_html_e( 'Enter one URL per line or separated by comma.', 'bulk-import-media-from-url' ); ?></p>
+                <input type="hidden" name="action" value="bulk-add-media-from-url">
+                <div class="btn-with-spinner" style="display:inline-block">
+                    <button class="button button-primary" type="submit">
+                        <?php esc_html_e( 'Import Media', 'bulk-import-media-from-url' ); ?>
+                    </button>
+                    <span class="spinner"></span>
+                </div>
+                <div class="ajax-response"></div>
+                <?php wp_nonce_field( 'bulk-add-media-from-url' ); ?>
+            </form>
+        </div>
+        <script>
+            jQuery(document).on('submit', '.form-bulk-add-media', function (e) {
+                e.preventDefault();
+                var $form = jQuery(this);
+                var $btn = $form.find('button[type="submit"]');
+
+                $form.find('.spinner').addClass('is-active');
+                $form.find('.ajax-response').html('');
+                $btn.prop('disabled', true);
+
+                jQuery.post(ajaxurl, $form.serialize(), function (response) {
+                    $form.find('.ajax-response').html(response);
+
+                }).always(function () {
+                    $btn.prop('disabled', false);
+                    $form.find('.spinner').removeClass('is-active');
+                });
+
+            });
+
+        </script>
+        <?php
+    }
+
 }
-add_action('admin_menu', 'bimfu_option_page');
+
+/**
+ * Initializes the main plugin
+ *
+ * @return \BIMFU_Plugin
+ */
+function bimfu_plugin() {
+    return BIMFU_Plugin::init();
+}
+
+// run
+bimfu_plugin();
+
+return;
+
 
 // Option Page HTML
 function bimfu_option_page_html() {
