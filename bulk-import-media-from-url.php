@@ -157,7 +157,6 @@ final class BIMFU_Plugin {
             foreach ($urls as $url) {
                 $attachment_id = $this->media_handle_sideload($url, 0, '', 'id');
                 if (is_wp_error($attachment_id)) {
-                    // echo '<p class="notice notice-error">' . $attachment_id->get_error_message() . ' (' . $url . ')</p>';
                     $response[] = [
                         'status' => 'error',
                         'msg' => esc_html( $attachment_id->get_error_message() ),
@@ -167,13 +166,12 @@ final class BIMFU_Plugin {
                     $response[] = [
                         'status' => 'success',
                         'msg' => esc_html__('Success: ', 'bulk-import-media-from-url'),
-                        'url' => esc_url($url)
+                        'url' => esc_url($url),
+                        'attachment_id' => $attachment_id,
                     ];
-                    // echo '<p class="notice notice-success">' . __('Success: ', 'bulk-import-media-from-url') . $url . '</p>';
                 }
             }
         } else {
-            // echo '<p class="error">' . __('No URL found.', 'bulk-import-media-from-url') . '</p>';
             wp_send_json_error( __('No URL found.', 'bulk-import-media-from-url') );
         }
 
