@@ -10,9 +10,10 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 /**
  * The main plugin class
@@ -73,7 +74,7 @@ final class BIMFU_Plugin {
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
             <form class="form-bulk-add-media" method="post">
                 <label for="urls"><strong class="title"><?php esc_html_e( 'Enter URLs', 'bulk-import-media-from-url' ); ?></strong></label>
-                <textarea name="urls" id="urls" class="large-text code" rows="10"></textarea>
+                <textarea name="urls" id="urls" class="large-text code" rows="10" style=" line-height: 28px; "></textarea>
                 <p class="description"><?php esc_html_e( 'Enter one URL per line or separated by comma.', 'bulk-import-media-from-url' ); ?></p>
                 <input type="hidden" name="action" value="bulk-add-media-from-url">
                 <div class="btn-with-spinner" style="display:inline-block">
